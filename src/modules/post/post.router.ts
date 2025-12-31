@@ -7,8 +7,8 @@ const router = express.Router();
 
 
 
-router.get("/", auth(UserRole.USER),
-  PostController.createPost
+router.get("/",
+  PostController.getAllPost
 );
 
 router.post("/", PostController.createPost)
