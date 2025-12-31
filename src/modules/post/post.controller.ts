@@ -23,7 +23,10 @@ const createPost = async (req:Request,res:Response)=>{
 
 const getAllPost = async(req: Request, res:Response)=>{
     try{
-        const result = await PostService.getAllPost()
+    const {search} = req.query
+
+        const searchString = typeof search === 'string' ? search : undefined;
+        const result = await PostService.getAllPost({search: searchString})
         res.status(200).json(result)
     }catch(error){
         res.status(400).json({
