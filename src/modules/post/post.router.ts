@@ -11,6 +11,8 @@ router.get("/",
   PostController.getAllPost
 );
 
+router.get("/:postId", PostController.getPostById)
+
 router.post("/", PostController.createPost)
 
 export const postRouter = router;
