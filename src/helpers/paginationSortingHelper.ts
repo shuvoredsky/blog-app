@@ -1,10 +1,14 @@
 type Ioptions = {
-    page?: number;
-    limit?: number;
+    page?: number | string;
+    limit?: number | string;
     sortOrder?: string;
     sortBy?: string;
 }
 
-const paginationSortingHelper = ()=>{
-
+const paginationSortingHelper = (options: Ioptions)=>{
+    console.log(options)
+    return options
+    // const page = Number
 }
+
+export default paginationSortingHelper;
