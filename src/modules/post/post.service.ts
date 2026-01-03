@@ -22,14 +22,20 @@ const getAllPost = async({
     status,
     authorId,
     page,
-    limit
+    limit,
+    skip,
+    sortBy,
+    sortOrder
 }:{search: string | undefined,
     tags: string[] | [],
     isFeatured: boolean | undefined,
     status: PostStatus | undefined,
     authorId: string | undefined,
     page: number,
-    limit: number
+    limit: number,
+    skip: number,
+    sortBy: string | undefined,
+    sortOrder: string | undefined
     })=>{
 
         const andCondition : PostWhereInput[] = []
@@ -79,9 +85,14 @@ const getAllPost = async({
         }
 
     const allPost = await prisma.post.findMany({
+        take: limit,
+        skip,
         where:{
           AND: andCondition
-        }
+        },
+        orderBy: sortBy && sortOrder ? {
+            [sortBy]: sortOrder
+        } : {createdAt: "desc"}
     })
     return allPost;
 }
