@@ -5,6 +5,9 @@ import { auth } from "./lib/auth";
 import cors from 'cors'
 import { commentRouter } from "./modules/comment/comment.router";
 
+
+
+
 const app = express();
 
 app.use(cors({
@@ -22,6 +25,6 @@ app.get("/", (req,res)=>{
 
 app.use("/posts", postRouter);
 
-app.use('comments', commentRouter)
+app.use('/comments', commentRouter)
 
 export default app;

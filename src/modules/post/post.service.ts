@@ -126,6 +126,13 @@ const getPostById = async (postId: string)=>{
     const postData = await prisma.post.findUnique({
         where:{
             id: postId
+        },
+        include: {
+            comments: {
+                where:{
+                    parentId: null
+                }
+            }
         }
     })
     return postData
