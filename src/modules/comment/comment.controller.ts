@@ -15,6 +15,21 @@ const createComment = async (req:Request, res:Response)=>{
     }
 }
 
+
+const getCommentById = async (req:Request, res:Response)=>{
+    try{
+        const {CommentId} = req.params
+        const result = await commentService.getCommentById(CommentId)
+        res.status(200).json(result)
+    }catch(error){
+        res.status(200).json({
+            erro: "Comment fetched failed",
+            details: e
+        })
+    }
+}
+
 export const CommentController = {
-    createComment
+    createComment,
+    getCommentById
 }
