@@ -2,6 +2,7 @@ import { Request, Response } from "express"
 import { PostService } from "./post.service"
 import { PostStatus } from "../../../generated/prisma/enums";
 import paginationSortingHelper from "../../helpers/paginationSortingHelper";
+import { prisma } from "../../lib/prisma";
 
 const createPost = async (req:Request,res:Response)=>{
     try{
@@ -71,8 +72,28 @@ try{
 }
 }
 
+
+
+const getMyPosts = async (req: Request, res:Response)=>{
+try{
+    const user = req.user;
+    if(!user){
+        throw new Error("you are unauthorized")
+    }
+    const result = await PostService.getMyPosts(user?.id);
+    res.status(200).json(result)
+}catch(error){
+    res.status(400).json({
+        error: "Post fetched failed",
+        details: error
+    })
+}
+}
+
+
 export const PostController = {
     createPost,
     getAllPost,
-    getPostById
+    getPostById,
+    getMyPosts
 }
