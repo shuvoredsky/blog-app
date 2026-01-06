@@ -1,5 +1,7 @@
 import e, { Request, Response } from "express";
 import { commentService } from "./comment.service";
+import { UserRole } from "../../middleware/auth";
+
 
 const createComment = async (req:Request, res:Response)=>{
     try{
@@ -19,16 +21,17 @@ const createComment = async (req:Request, res:Response)=>{
 const getCommentById = async (req:Request, res:Response)=>{
     try{
         const {CommentId} = req.params
-        const result = await commentService.getCommentById(CommentId)
+        const result = await commentService.getCommentById(CommentId as string)
         res.status(200).json(result)
-    }catch(error){
+    }catch(e){
+        const errorMessage = (e instanceof Error) ? e.message : "Comment fetched failed"
         res.status(200).json({
-            erro: "Comment fetched failed",
+            
+            erro: errorMessage,
             details: e
         })
     }
 }
-
 
 
 

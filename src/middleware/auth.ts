@@ -6,7 +6,7 @@ export enum UserRole{
 }
 
 declare global{
-  namespace Exress {
+  namespace Express {
     interface Request{
       user?:{
         id: string;
@@ -34,8 +34,8 @@ const auth = (...roles: UserRole[]) => {
       if(!session.user.emailVerified){
         return res.status(403).json({ message: "Email veryfiaction required, please verify your email" })
       }
-
-      req.body.user={
+      
+      req.user={
         id: session.user.id,
         email: session.user.email,
         name: session.user.name,
@@ -43,7 +43,7 @@ const auth = (...roles: UserRole[]) => {
         emailVerified: session.user.emailVerified
       }
 
-      if(roles.length && !roles.includes(req.body.role as UserRole)){
+      if(roles.length && !roles.includes(req.user.role as UserRole)){
         return res.status(403).json({ message: "Forbidden: you don't have permission to access this resources" })
       }
       
