@@ -130,10 +130,26 @@ try{
 }
 
 
+
+const getStats = async (req: Request, res:Response)=>{
+try{
+    
+    const result = await PostService.getStats();
+    res.status(200).json(result)
+}catch(error){
+    res.status(400).json({
+        error: "stats fetch failed",
+        details: error
+    })
+}
+}
+
+
 export const PostController = {
     createPost,
     getAllPost,
     getPostById,
     getMyPosts,
-    updatePost
+    updatePost,
+    getStats
 }
