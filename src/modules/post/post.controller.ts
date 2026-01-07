@@ -111,6 +111,25 @@ try{
 }
 
 
+const deletePost = async (req: Request, res:Response)=>{
+try{
+    const user = req.user;
+    if(!user){
+        throw new Error("you are unauthorized")
+    }
+    const {postId} = req.params
+    const isAdmin = user.role === UserRole.ADMIN
+    const result = await PostService.deletePost(postId as string, user.id, isAdmin);
+    res.status(200).json(result)
+}catch(error){
+    res.status(400).json({
+        error: "Post delete failed",
+        details: error
+    })
+}
+}
+
+
 export const PostController = {
     createPost,
     getAllPost,
