@@ -13,6 +13,20 @@ function errorHandler (err:any, req:Request, res:Response, next: NextFunction){
         errorMessage = "You provide incorrect field type or missing fields"
         
     }
+    else if(err instanceof Prisma.PrismaClientKnownRequestError){
+        if(err.code === "P2025"){
+            statusCode = 400;
+            errorMessage: "An operation failed because it depends on one or more records that were"
+        }
+        else if(err.code === "P2002"){
+            statusCode: 400;
+            errorMessage: "Unique constraint failed on the "
+        }
+        else if(err.code === "P2003"){
+            statusCode: 400;
+            errorMessage = "Foreign key constraints failed"
+        }
+    }
 
     res.status(statusCode)
     res.json({
